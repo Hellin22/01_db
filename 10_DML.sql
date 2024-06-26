@@ -61,7 +61,7 @@ UPDATE tbl_menu
 /* DELETE */
 -- 테이블의 행을 삭제
 -- 테이블 행의 개수가 줄어든다. (영향을 받았다면)
-SELECT * FROM tbl_menu ORDER BY 1 DESC;
+SELECT * FROM tbl_menu ORDER BY 3 DESC;
 -- delect는 컬럼이 필요가 없는데 왜냐하면 행 자체를 모두 지우는거기 때문이다. 그러면 행 전체를 지우는게 아닌 행, 열 1개의 자료만을 없앨 수는 없나?
 DELETE
   FROM tbl_menu;
@@ -69,5 +69,36 @@ DELETE
 ROLLBACK;
 
 -- mysql or mariadb는 autocommit이 기본적으로 'on'이라 insert, update, delete를 할때 base table(메모리)에 바로 반영된다.
--- 다시 살리고 싶다면 autocommit을 꺼주고 rollback을 하면 된다. -> autocommit을 한다는 것은 자동으로 commit
+-- 다시 살리고 싶다면 autocommit을 꺼주고 rollback을 하면 된다. -> autocommit을 한다는 것은 자동으로 commit을 날려서 적용되는것이다.
 SET autocommit = OFF;
+
+
+DELETE
+  FROM tbl_menu
+ ORDER BY menu_price -- 메뉴 가격기준 오름차순
+ LIMIT 2;				-- 정렬된것 중에서 1, 2행 
+ 
+-- 전체 테이블을 지울때에는 delete from tbl 이렇게 하지 않음. 한행한행 지우기 때문에. -> 이 대신에 트렁케이트? 이걸씀.
+-- 행을 기준으로 지울때에는 order by, limit를 사용한다.
+
+
+/* replace */
+-- insert 시에 primary key(null x, 중복 x, 이후 수정 x) or unique key(중복 x)가 
+-- 충돌 발생하지 않도록 replace를 통해 중복된 데이터는 덮어씌울 수 있다.
+-- -> insert와 다르게 where로 중복유무를 하는게 아니라 pk, uk가 중복되면 새롭게 추가가 아닌 덮어씌움.
+-- -> pk, uk가 설명에 나온 이유는 pk, uk가 중복 체크를 할 수 있기 때문이다. (replace가 중복 체크를 자동으로 pk같은걸로 해버려서 insert를 할지 replace를 할지를 결정한다.)
+
+REPLACE tbl_menu -- into 생략 가능
+ VALUES
+(
+  17
+, '참기름소주'
+, 5000
+, 10
+, 'Y'
+); -- --> 존재x면 새롭게 insert / 존재 o면 update
+SELECT *  FROM tbl_menu WHERE menu_code = 17;
+
+
+
+
