@@ -151,3 +151,27 @@ SELECT
 		 *
   FROM tbl_category
  WHERE ref_category_code IS NOT NULL;
+ 
+ 
+ 
+ 
+  SELECT 
+		 *
+  FROM tbl_category
+ WHERE ref_category_code IS NOT NULL
+ 	AND category_name NOT LIKE '%식%';
+ 
+ 
+   SELECT 
+		 *
+  FROM tbl_category
+ WHERE not category_code = 1
+ 	AND ref_category_code IS null;
+ 	
+  SELECT 
+		 *
+  FROM tbl_menu
+  WHERE menu_price NOT BETWEEN 7000 AND 20000 AND menu_name NOT LIKE '%바%'
+  ORDER BY 3 ASC;
+ 
+   

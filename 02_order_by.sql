@@ -44,9 +44,9 @@ SELECT
 -- 주문 가능한것 부터 보이게 정렬
 SELECT
 		 menu_name
-	  , orderable_status AS 'dd.'
+	  , orderable_status AS `dd.`
   FROM tbl_menu
- ORDER BY FIELD('dd.', 'N', 'Y') DESC; -- 숫자로 바꾸고 싶은 곳을 field에 넣으면 됨. -> .을 썼기 때문에 ' '을 사용해야함.
+ ORDER BY FIELD(`dd.`, 'N', 'Y') DESC; -- 숫자로 바꾸고 싶은 곳을 field에 넣으면 됨. -> .을 썼기 때문에 ' '을 사용해야함.
  
  
 -- -------------------------------------------------------------------
