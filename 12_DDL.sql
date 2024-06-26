@@ -73,11 +73,23 @@ DESC tb2;
 
 -- 선생님께서 truncate에 대해 보고 한다고 하셨음.
 /* truncate */ -- 절삭 의미 
+-- 절삭(truncate) vs 삭제(delete)
+-- 테이블의 데이터(데이터 및 관련 제약조건 등 깔끔하게 제거)
+-- 테이블의 초기화(테이블 처음 만들 당시로 돌려줌)
 CREATE TABLE if NOT EXISTS tb3(
   pk INT AUTO_INCREMENT,
   fk INT,
   col1 VARCHAR(255) CHECK(col1 IN ('Y', 'N')),
   PRIMARY KEY(pk)
+);
+
+INSERT 
+  INTO tb3
+VALUES
+(
+  NULL
+, 1
+, 'N'
 );
 
 DESC tb3; -- pk는 테이블당 1개?
@@ -88,6 +100,7 @@ DROP TABLE tb3;
 
 TRUNCATE TABLE tb3;
 
-
+-- drop은 테이블 자체를 없애는것.
+-- truncate는 테이블의 모든 row를 없애는것. 제약조건들은 존재한다.
 
 
