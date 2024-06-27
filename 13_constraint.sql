@@ -193,5 +193,51 @@ DELETE FROM user_grade WHERE grade_code = 10;
 SELECT * FROM user_foreignkey2;
 
 
-SELECT *
-FROM tbl_order_menu;
+/* check 제약조건 */ -- 디테일한 제약조건을 걸 수 있음. by 조건식
+DROP TABLE if EXISTS user_check;
+CREATE TABLE if NOT EXISTS user_check(
+  user_no INT AUTO_INCREMENT PRIMARY KEY,
+  user_name VARCHAR(255) NOT NULL,
+  gender VARCHAR(255) CHECK(gender IN ('남', '여')),
+  age INT CHECK(age >= 19)
+) ENGINE=INNODB;
+
+
+INSERT
+  INTO user_check
+VALUES
+(NULL, '홍길동', '남', 25),
+(NULL, '동길동', '여', 19);
+
+SELECT * FROM user_check;
+
+-- 성별에 잘못된 값 입력해서 test 시작
+INSERT
+  INTO user_check
+VALUES
+(NULL, '아메바', '모름', 25);
+
+
+INSERT
+  INTO user_check
+VALUES
+(NULL, '응애기', '남', 12);
+
+
+/* default 제약조건 */
+DROP TABLE if EXISTS tbl_country;
+CREATE TABLE if NOT EXISTS tbl_country(
+  country_code INT AUTO_INCREMENT PRIMARY KEY,
+  country_name VARCHAR(255) DEFAULT '한국',
+  population VARCHAR(255) DEFAULT '0명',
+  add_day DATE DEFAULT (CURRENT_DATE),
+  add_time DATETIME DEFAULT (CURRENT_TIME)
+) ENGINE INNODB;
+
+
+INSERT
+  INTO tbl_country
+VALUES
+(NULL, DEFAULT, DEFAULT, DEFAULT, DEFAULT);
+
+SELECT * FROM tbl_country;
